@@ -24,7 +24,7 @@ if (!isset($_SESSION['email'])) {
     <ul class="navbar-nav mr-lg-2">
       <li class="nav-item  d-none d-lg-flex">
         <a class="nav-link" href="./index.php">
-          Home
+          Dashboard
         </a>
       </li>
       <li class="nav-item  d-none d-lg-flex">
@@ -33,8 +33,13 @@ if (!isset($_SESSION['email'])) {
         </a>
       </li>
       <li class="nav-item  d-none d-lg-flex">
-        <a class="nav-link" href="#">
-          Tested 
+        <a class="nav-link" href="./test-products.php">
+          Test
+        </a>
+      </li>
+      <li class="nav-item  d-none d-lg-flex">
+        <a class="nav-link" href="">
+          Reports
         </a>
       </li>
     </ul>

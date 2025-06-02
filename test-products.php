@@ -1,3 +1,4 @@
+<h1>hello</h1>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,19 +63,21 @@
                                 </form>
 
                                 <!-- Add Product button -->
-                                <a href="add-product-type.php" style="text-decoration: none;">
+                                <!-- <a href="add-product-type.php" style="text-decoration: none;">
                                     <button type="button" class="btn btn-info btn-sm d-flex align-items-center">
                                         <i class="mdi mdi-plus-circle-outline mdi-18px mr-2"></i>
-                                        Add Product Type
+                                        Add Product To Test
                                     </button>
-                                </a>
+                                </a> -->
                             </div>
 
                             <!-- Table -->
                             <div class="table-responsive">
                                 <?php
                                 include 'config.php';
-                                $sql = "SELECT * FROM product_types ORDER BY id DESC";
+                                // $sql = "SELECT * FROM products ORDER BY id DESC";
+                                $sql = "SELECT p.id, p.product_id, p.product_name, pt.code, p.revision_code, p.manufacturing_number, p.manufactured_date, p.Uploaded_by FROM products p INNER JOIN product_types pt ON p.product_type_id = pt.id ORDER BY p.id DESC;";
+
                                 $result = mysqli_query($connect, $sql);
                                 if (mysqli_num_rows($result) > 0) {
 
@@ -82,12 +85,15 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Product_id</th>
-                                                <th>Product_name</th>
-                                                <th>Product_Code</th>
-                                                <th>Add to Test</th>
-                                                <th>Edit</th>
-                                                <th>Delete</th>
+                                                <th>Prod_id</th>
+                                                <th>Prod_name</th>
+                                                <th>Prod_Code</th>
+                                                <th>Revision_Code</th>
+                                                <th>Mfg_Number</th>
+                                                <th>Mfg_Date</th>
+                                                <th>Uploaded_By</th>
+                                                <th>Test</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -96,34 +102,27 @@
 
                                                 ?>
                                                 <tr>
-                                                    <td class="py-1"><?php echo $row['id']; ?></td>
-                                                    <td><?php echo $row['type_name']; ?></td>
+                                                    <td class="py-1"><?php echo $row['product_id']; ?></td>
+                                                    <td><?php echo $row['product_name']; ?></td>
                                                     <td><?php echo $row['code']; ?></td>
+                                                    <td><?php echo $row['revision_code']; ?></td>
+                                                    <td><?php echo $row['manufacturing_number']; ?></td>
+                                                    <td><?php echo $row['manufactured_date']; ?></td>
+                                                    <td><?php echo $row['Uploaded_by']; ?></td>
                                                     <td>
-                                                        <a href="add-prod-to-test.php?prodid=<?php echo $row['id'];?>" style="cursor: pointer;color: #000;">
-                                                            <i class="mdi mdi-plus-circle-outline mdi-20px" style="color: #F2125E;"></i>
-                                                            Add
+                                                        <a href="test-product-form.php?prodid=<?php echo $row['id']; ?>" style="cursor: pointer;color: #000;">
+                                                            <i class="mdi mdi-test-tube mdi-20px" style="color: #F2125E;"></i>
+                                                            Test
                                                         </a>
                                                     </td>
-                                                    <td>
-                                                        <a href="edit-product-type.php?prodid=<?php echo $row['id'];?>" style="cursor: pointer; color: #000;">
-                                                            <i class="mdi mdi-pencil mdi-20px" style="color: #F2125E;"></i>
-                                                            Edit
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a href="delete-product-type.php?prodid=<?php echo $row['id'];?>" style="cursor: pointer; color: #000;">
-                                                            <i class="mdi mdi-delete mdi-20px" style="color: #F2125E;"></i>
-                                                            Delete
-                                                        </a>
-                                                    </td>
+                                                    
                                                 </tr>
-                                            <?php
+                                                <?php
                                             }
                                             ?>
                                         </tbody>
                                     </table>
-                                <?php
+                                    <?php
                                 } else {
                                     echo "<h3>No Results Found.</h3>";
                                 }
