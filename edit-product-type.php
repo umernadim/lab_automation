@@ -59,7 +59,7 @@ if (isset($_POST['save'])) {
             <div class="main-panel">
                 <div class="content-wrapper" style="display: flex; justify-content: center;">
                     <div class="col-md-6 grid-margin ">
-                        <div class="card">
+                        <div class="card mt-5">
                             <div class="card-body">
                                 <h3 class="card-title">Update Product Type</h3>
                                 <?php
@@ -88,7 +88,7 @@ if (isset($_POST['save'])) {
                                         </div>
 
                                         <button type="submit" name="save" class="btn btn-primary mr-2">Submit</button>
-                                        <button class="btn btn-light">Cancel</button>
+                                       
                                     </form>
                                 <?php } ?>
                             </div>

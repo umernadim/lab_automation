@@ -112,17 +112,19 @@ if (isset($_POST['submit'])) {
                                         </div>
 
                                         <!-- Tested By & Test Result (Side by Side) -->
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="exampleTestedBy">Tested By</label>
-                                                <input type="text" class="form-control" id="exampleTestedBy" name="test_by"
-                                                    placeholder="Tested by" required>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="exampleTestResult">Test Result</label>
-                                                <input type="text" class="form-control" id="exampleTestResult"
-                                                    name="test_result" placeholder="Test result" required>
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="exampleTestedBy">Tested By</label>
+                                            <input type="text" class="form-control" id="exampleTestedBy" name="test_by"
+                                                placeholder="Tested by" required>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleTestResult">Test Result</label>
+                                            <select class="form-control" id="exampleTestResult" name="test_result" required>
+                                                <option disabled selected value="">Select testing result</option>
+                                                <option value="Passed">Passed</option>
+                                                <option value="Failed">Failed</option>
+                                            </select>
                                         </div>
 
                                         <!-- Remarks -->
