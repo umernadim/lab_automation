@@ -1,3 +1,28 @@
+<?php
+include "config.php";
+
+if (isset($_POST['submit'])) {
+    $product_id = mysqli_real_escape_string($connect, $_POST['product_id']);
+    $testing_type = mysqli_real_escape_string($connect, $_POST['testingType']);
+    $test_criteria = mysqli_real_escape_string($connect, $_POST['test_criteria']);
+    $observed_output = mysqli_real_escape_string($connect, $_POST['observed_output']);
+    $test_by = mysqli_real_escape_string($connect, $_POST['test_by']);
+    $test_result = mysqli_real_escape_string($connect, $_POST['test_result']);
+    $remarks = mysqli_real_escape_string($connect, $_POST['remarks']);
+
+    $sql = "INSERT INTO tests(product_id, test_type, test_criteria, observed_output, tested_by, test_result, remarks) VALUES ('{$product_id}', '{$testing_type}', '{$test_criteria}', '{$observed_output}', '{$test_by}', '{$test_result}', '{$remarks}')";
+
+    if (mysqli_query($connect, $sql)) {
+        header("Location:test-record.php");
+    } else {
+        echo "<p style='color: red; text-align:center;'>Failed to submit test. Error: " . mysqli_error($connect) . "</p>";
+
+    }
+
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,67 +68,78 @@
                             <div class="card-body">
                                 <h3 class="card-title">Test Product</h3>
 
-                                <form class="user px-1 py-3" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                                <?php
+                                $prodid = $_GET['prodid'];
+                                $sql1 = "SELECT product_id FROM products WHERE id = {$prodid}";
+                                $result1 = mysqli_query($connect, $sql1);
+                                if ($row1 = mysqli_fetch_assoc($result1)) {
 
-                                    <!-- Product ID -->
-                                    <div class="form-group">
-                                        <label for="exampleProductid">Product ID</label>
-                                        <input type="text" class="form-control" id="exampleProductid" name="product_id"
-                                            placeholder="Enter Product ID" required>
-                                    </div>
+                                    ?>
 
-                                    <!-- Test Type -->
-                                    <div class="form-group">
-                                        <label for="testingType">Testing Type</label>
-                                        <select class="form-control" id="testingType" name="testingType" required>
-                                            <option disabled selected value="">Select testing type</option>
-                                            <option value="Voltage Test">Voltage Test</option>
-                                            <option value="Capacity Test">Capacity Test</option>
-                                            <option value="Insulation Test">Insulation Test</option>
-                                        </select>
-                                    </div>
+                                    <form class="user px-1 py-3" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 
-                                    <!-- Test Criteria -->
-                                    <div class="form-group">
-                                        <label for="exampleTestCriteria">Test Criteria</label>
-                                        <textarea class="form-control" id="exampleTestCriteria" name="test_criteria"
-                                            rows="2" placeholder="Enter test criteria" required></textarea>
-                                    </div>
-
-                                    <!-- Observed Output -->
-                                    <div class="form-group">
-                                        <label for="exampleObservedOutput">Observed Output</label>
-                                        <textarea class="form-control" id="exampleObservedOutput" name="observed_output"
-                                            rows="2" placeholder="Enter observed output" required></textarea>
-                                    </div>
-
-                                    <!-- Tested By & Test Result (Side by Side) -->
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="exampleTestedBy">Tested By</label>
-                                            <input type="text" class="form-control" id="exampleTestedBy" name="test_by"
-                                                placeholder="Tested by" required>
+                                        <!-- Product ID -->
+                                        <div class="form-group">
+                                            <label for="exampleProductid">Product ID</label>
+                                            <input type="text" value="<?php echo $row1['product_id']; ?>"
+                                                class="form-control" id="exampleProductid" name="product_id"
+                                                placeholder="Enter Product ID" required>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="exampleTestResult">Test Result</label>
-                                            <input type="text" class="form-control" id="exampleTestResult"
-                                                name="test_result" placeholder="Test result" required>
+
+                                        <!-- Test Type -->
+                                        <div class="form-group">
+                                            <label for="testingType">Testing Type</label>
+                                            <select class="form-control" id="testingType" name="testingType" required>
+                                                <option disabled selected value="">Select testing type</option>
+                                                <option value="Voltage Test">Voltage Test</option>
+                                                <option value="Capacity Test">Capacity Test</option>
+                                                <option value="Insulation Test">Insulation Test</option>
+                                            </select>
                                         </div>
-                                    </div>
 
-                                    <!-- Remarks -->
-                                    <div class="form-group">
-                                        <label for="exampleRemarks">Remarks</label>
-                                        <textarea class="form-control" id="exampleRemarks" name="remarks" rows="3"
-                                            placeholder="Enter remarks" required></textarea>
-                                    </div>
+                                        <!-- Test Criteria -->
+                                        <div class="form-group">
+                                            <label for="exampleTestCriteria">Test Criteria</label>
+                                            <textarea class="form-control" id="exampleTestCriteria" name="test_criteria"
+                                                rows="2" placeholder="Enter test criteria" required></textarea>
+                                        </div>
 
-                                    <!-- Submit Button -->
-                                    <button type="submit" name="submit" class="btn btn-primary btn-block">Submit
-                                        Test</button>
+                                        <!-- Observed Output -->
+                                        <div class="form-group">
+                                            <label for="exampleObservedOutput">Observed Output</label>
+                                            <textarea class="form-control" id="exampleObservedOutput" name="observed_output"
+                                                rows="2" placeholder="Enter observed output" required></textarea>
+                                        </div>
 
-                                </form>
+                                        <!-- Tested By & Test Result (Side by Side) -->
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="exampleTestedBy">Tested By</label>
+                                                <input type="text" class="form-control" id="exampleTestedBy" name="test_by"
+                                                    placeholder="Tested by" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="exampleTestResult">Test Result</label>
+                                                <input type="text" class="form-control" id="exampleTestResult"
+                                                    name="test_result" placeholder="Test result" required>
+                                            </div>
+                                        </div>
 
+                                        <!-- Remarks -->
+                                        <div class="form-group">
+                                            <label for="exampleRemarks">Remarks</label>
+                                            <textarea class="form-control" id="exampleRemarks" name="remarks" rows="3"
+                                                placeholder="Enter remarks" required></textarea>
+                                        </div>
+
+                                        <!-- Submit Button -->
+                                        <button type="submit" name="submit" class="btn btn-primary btn-block">Submit
+                                            Test</button>
+
+                                    </form>
+                                    <?php
+                                }
+                                ?>
 
 
 

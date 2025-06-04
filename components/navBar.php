@@ -6,8 +6,6 @@ if (!isset($_SESSION['email'])) {
   header("Location: login.php");
 }
 
-
-
 ?>
 
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -38,7 +36,7 @@ if (!isset($_SESSION['email'])) {
         </a>
       </li>
       <li class="nav-item  d-none d-lg-flex">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="./test-record.php">
           Reports
         </a>
       </li>
