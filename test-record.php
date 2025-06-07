@@ -26,10 +26,7 @@
         <?php
         include 'components/navBar.php';
         ?>
-        <!---------- Change Theme Code --------->
-        <?php
-        include 'components/changeTheme.php';
-        ?>
+
         <div class="container-fluid page-body-wrapper">
 
             <!-- partial -->
@@ -47,13 +44,15 @@
                             <!-- Top Bar: Search Bar and Add Product Button -->
                             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
                                 <!-- Search bar -->
-                                <form class="form-inline w-50">
+                                <form class="form-inline w-50" method="GET" action="">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <input type="text" name="" class="form-control"
-                                                placeholder="Search product..." aria-label="">
+                                            <input type="text" name="search" class="form-control"
+                                                placeholder="Search product..." value="<?php if (isset($_GET['search'])) {
+                                                    echo htmlspecialchars($_GET['search']);
+                                                } ?>">
                                             <div class="input-group-append">
-                                                <button class="btn btn-outline-primary btn-sm" name="" type="button">
+                                                <button class="btn btn-outline-info btn-sm" type="submit">
                                                     <i class="mdi mdi-magnify"></i>
                                                 </button>
                                             </div>
@@ -66,10 +65,29 @@
                             <div class="table-responsive">
                                 <?php
                                 include 'config.php';
-                                $sql = "SELECT t.id, t.test_id, t.product_id, p.product_name, t.test_type, t.tested_by, t.test_result, t.tested_at FROM tests AS t
-                                INNER JOIN products AS p
-                                ON t.product_id = p.product_id
-                                ORDER BY id DESC";
+                                $search = isset($_GET['search']) ? mysqli_real_escape_string($connect, $_GET['search']) : '';
+
+                                if (!empty($search)) {
+
+                                    $search = mysqli_real_escape_string($connect, trim($_GET['search']));
+
+                                    $sql = "SELECT t.id, t.test_id, t.product_id, p.product_name, t.test_type, t.tested_by, t.test_result, t.tested_at FROM tests AS t
+                                    INNER JOIN products AS p
+                                    ON t.product_id = p.product_id
+                                    WHERE ( p.product_name LIKE '%$search%' 
+                                    OR t.test_id LIKE '%$search%'
+                                    OR t.product_id LIKE '%$search%'
+                                    OR t.tested_at LIKE '%$search%'
+                                    )
+                                    ORDER BY id DESC";
+                                } else {
+                                    $sql = "SELECT t.id, t.test_id, t.product_id, p.product_name, t.test_type, t.tested_by, t.test_result, t.tested_at FROM tests AS t
+                                    INNER JOIN products AS p
+                                    ON t.product_id = p.product_id
+                                ";
+                                }
+
+
                                 $result = mysqli_query($connect, $sql);
                                 if (mysqli_num_rows($result) > 0) {
 
@@ -100,20 +118,21 @@
                                                     <td><?php echo $row['tested_by']; ?></td>
                                                     <td><?php echo $row['test_result']; ?></td>
                                                     <td><?php echo $row['tested_at']; ?></td>
-                                                    
+
                                                     <td>
-                                                        <a href="delete-product-type.php?prodid=<?php echo $row['id'];?>" style="cursor: pointer; color: #000;">
+                                                        <a href="delete-product-type.php?prodid=<?php echo $row['id']; ?>"
+                                                            style="cursor: pointer; color: #000;">
                                                             <i class="mdi mdi-download mdi-20px" style="color: #F2125E;"></i>
                                                             Generate
                                                         </a>
                                                     </td>
                                                 </tr>
-                                            <?php
+                                                <?php
                                             }
                                             ?>
                                         </tbody>
                                     </table>
-                                <?php
+                                    <?php
                                 } else {
                                     echo "<h3>No Results Found.</h3>";
                                 }
@@ -126,9 +145,7 @@
 
 
                 <!------------ footer ------------>
-                <?php
-                include 'components/footer.php';
-                ?>
+              <?php include 'components/footer.php'; ?>
             </div>
         </div>
         <!-- page-body-wrapper ends -->

@@ -26,10 +26,6 @@
         <?php
         include 'components/navBar.php';
         ?>
-        <!---------- Change Theme Code --------->
-        <?php
-        include 'components/changeTheme.php';
-        ?>
         <div class="container-fluid page-body-wrapper">
 
             <!-- partial -->
@@ -39,21 +35,23 @@
             ?>
             <!-- partial -->
             <div class="main-panel">
-
+            
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
 
-                            <!-- Top Bar: Search Bar and Add Product Button -->
+                            <!-- Top Bar: Search Bar -->
                             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
                                 <!-- Search bar -->
-                                <form class="form-inline w-50">
+                                <form class="form-inline w-50" method="GET" action="">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <input type="text" name="" class="form-control"
-                                                placeholder="Search product..." aria-label="">
+                                            <input type="text" name="search" class="form-control"
+                                                placeholder="Search product..." value="<?php if (isset($_GET['search'])) {
+                                                    echo htmlspecialchars($_GET['search']);
+                                                } ?>">
                                             <div class="input-group-append">
-                                                <button class="btn btn-outline-primary btn-sm" name="" type="button">
+                                                <button class="btn btn-outline-info btn-sm" type="submit">
                                                     <i class="mdi mdi-magnify"></i>
                                                 </button>
                                             </div>
@@ -62,11 +60,26 @@
                                 </form>
                             </div>
 
+
                             <!-- Table -->
                             <div class="table-responsive">
                                 <?php
                                 include 'config.php';
-                                $sql = "SELECT p.id, p.product_id, p.product_name, pt.code, p.revision_code, p.manufacturing_number, p.manufactured_date, p.Uploaded_by FROM products p INNER JOIN product_types pt ON p.product_type_id = pt.id ORDER BY p.id DESC;";
+                                $search = isset($_GET['search']) ? mysqli_real_escape_string($connect, $_GET['search']) : '';
+
+                                if (!empty($search)) {
+
+                                    $search = mysqli_real_escape_string($connect, trim($_GET['search']));
+
+                                    $sql = "SELECT p.id, p.product_id, p.product_name, pt.code, p.revision_code, p.manufacturing_number, p.manufactured_date, p.Uploaded_by FROM products p INNER JOIN product_types pt ON p.product_type_id = pt.id 
+                                        WHERE (p.product_name LIKE '%$search%' 
+                                        OR p.product_id LIKE '%$search%' 
+                                        OR p.manufactured_date LIKE '%$search%'
+                                        )
+                                        ORDER BY id DESC";
+                                } else {
+                                    $sql = "SELECT p.id, p.product_id, p.product_name, pt.code, p.revision_code, p.manufacturing_number, p.manufactured_date, p.Uploaded_by FROM products p INNER JOIN product_types pt ON p.product_type_id = pt.id ORDER BY p.id DESC";
+                                }
 
                                 $result = mysqli_query($connect, $sql);
                                 if (mysqli_num_rows($result) > 0) {
@@ -100,12 +113,13 @@
                                                     <td><?php echo $row['manufactured_date']; ?></td>
                                                     <td><?php echo $row['Uploaded_by']; ?></td>
                                                     <td>
-                                                        <a href="test-product-form.php?prodid=<?php echo $row['id']; ?>" style="cursor: pointer;color: #000;">
+                                                        <a href="test-product-form.php?prodid=<?php echo $row['id']; ?>"
+                                                            style="cursor: pointer;color: #000;">
                                                             <i class="mdi mdi-test-tube mdi-20px" style="color: #F2125E;"></i>
                                                             Test
                                                         </a>
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <?php
                                             }
@@ -125,20 +139,17 @@
 
 
                 <!------------ footer ------------>
-                <?php
+                <!-- <?php
                 include 'components/footer.php';
-                ?>
+                ?> -->
             </div>
         </div>
+                
         <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
     <!-- base:js -->
     <script src="vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page-->
-    <!-- End plugin js for this page-->
-    <!-- inject:js -->
     <script src="js/off-canvas.js"></script>
     <script src="js/hoverable-collapse.js"></script>
     <script src="js/template.js"></script>

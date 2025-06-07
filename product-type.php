@@ -26,10 +26,7 @@
         <?php
         include 'components/navBar.php';
         ?>
-        <!---------- Change Theme Code --------->
-        <?php
-        include 'components/changeTheme.php';
-        ?>
+
         <div class="container-fluid page-body-wrapper">
 
             <!-- partial -->
@@ -39,97 +36,114 @@
             ?>
             <!-- partial -->
             <div class="main-panel">
+                <div class="content-wrapper" style="display: flex; justify-content: center;">
 
-                <div class="col-lg-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="col-lg-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
 
-                            <!-- Top Bar: Search Bar and Add Product Button -->
-                            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-                                <!-- Search bar -->
-                                <form class="form-inline w-50">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <input type="text" name="" class="form-control"
-                                                placeholder="Search product..." aria-label="">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-primary btn-sm" name="" type="button">
-                                                    <i class="mdi mdi-magnify"></i>
-                                                </button>
+                                <!-- Top Bar: Search Bar and Add Product Button -->
+                                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+                                    <!-- Search bar -->
+                                    <form class="form-inline w-50" method="GET" action="">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="text" name="search" class="form-control"
+                                                    placeholder="Search product..." value="<?php if (isset($_GET['search'])) {
+                                                        echo htmlspecialchars($_GET['search']);
+                                                    } ?>">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-info btn-sm" type="submit">
+                                                        <i class="mdi mdi-magnify"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </form>
+                                    </form>
 
-                                <!-- Add Product button -->
-                                <a href="add-product-type.php" style="text-decoration: none;">
-                                    <button type="button" class="btn btn-info btn-sm d-flex align-items-center">
-                                        <i class="mdi mdi-plus-circle-outline mdi-18px mr-2"></i>
-                                        Add Product Type
-                                    </button>
-                                </a>
-                            </div>
+                                    <!-- Add Product button -->
+                                    <a href="add-product-type.php" style="text-decoration: none;">
+                                        <button type="button" class="btn btn-info btn-sm d-flex align-items-center">
+                                            <i class="mdi mdi-plus-circle-outline mdi-18px mr-2"></i>
+                                            Add Product Type
+                                        </button>
+                                    </a>
+                                </div>
 
-                            <!-- Table -->
-                            <div class="table-responsive">
-                                <?php
-                                include 'config.php';
-                                $sql = "SELECT * FROM product_types ORDER BY id DESC";
-                                $result = mysqli_query($connect, $sql);
-                                if (mysqli_num_rows($result) > 0) {
+                                <!-- Table -->
+                                <div class="table-responsive">
+                                    <?php
+                                    include 'config.php';
+                                    $search = isset($_GET['search']) ? mysqli_real_escape_string($connect, $_GET['search']) : '';
+                                    if (!empty($search)) {
+                                        $sql = "SELECT * FROM product_types 
+                                    WHERE type_name LIKE '%$search%' 
+                                    OR code LIKE '%$search%' 
+                                    ORDER BY id DESC";
+                                    } else {
+                                        $sql = "SELECT * FROM product_types ORDER BY id DESC";
+                                    }
 
-                                    ?>
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Product_id</th>
-                                                <th>Product_name</th>
-                                                <th>Product_Code</th>
-                                                <th>Add to Test</th>
-                                                <th>Edit</th>
-                                                <th>Delete</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            while ($row = mysqli_fetch_assoc($result)) {
+                                    $result = mysqli_query($connect, $sql);
+                                    if (mysqli_num_rows($result) > 0) {
 
-                                                ?>
+                                        ?>
+                                        <table class="table table-striped">
+                                            <thead>
                                                 <tr>
-                                                    <td class="py-1"><?php echo $row['id']; ?></td>
-                                                    <td><?php echo $row['type_name']; ?></td>
-                                                    <td><?php echo $row['code']; ?></td>
-                                                    <td>
-                                                        <a href="add-prod-to-test.php?prodid=<?php echo $row['id'];?>" style="cursor: pointer;color: #000;">
-                                                            <i class="mdi mdi-plus-circle-outline mdi-20px" style="color: #F2125E;"></i>
-                                                            Add
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a href="edit-product-type.php?prodid=<?php echo $row['id'];?>" style="cursor: pointer; color: #000;">
-                                                            <i class="mdi mdi-pencil mdi-20px" style="color: #F2125E;"></i>
-                                                            Edit
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a href="delete-product-type.php?prodid=<?php echo $row['id'];?>" style="cursor: pointer; color: #000;">
-                                                            <i class="mdi mdi-delete mdi-20px" style="color: #F2125E;"></i>
-                                                            Delete
-                                                        </a>
-                                                    </td>
+                                                    <th>Product_id</th>
+                                                    <th>Product_name</th>
+                                                    <th>Product_Code</th>
+                                                    <th>Add to Test</th>
+                                                    <th>Edit</th>
+                                                    <th>Delete</th>
                                                 </tr>
-                                            <?php
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                <?php
-                                } else {
-                                    echo "<h3>No Results Found.</h3>";
-                                }
-                                ?>
-                            </div>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                while ($row = mysqli_fetch_assoc($result)) {
 
+                                                    ?>
+                                                    <tr>
+                                                        <td class="py-1"><?php echo $row['id']; ?></td>
+                                                        <td><?php echo $row['type_name']; ?></td>
+                                                        <td><?php echo $row['code']; ?></td>
+                                                        <td>
+                                                            <a href="add-prod-to-test.php?prodid=<?php echo $row['id']; ?>"
+                                                                style="cursor: pointer;color: #000;">
+                                                                <i class="mdi mdi-plus-circle-outline mdi-20px"
+                                                                    style="color: #F2125E;"></i>
+                                                                Add
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="edit-product-type.php?prodid=<?php echo $row['id']; ?>"
+                                                                style="cursor: pointer; color: #000;">
+                                                                <i class="mdi mdi-pencil mdi-20px" style="color: #F2125E;"></i>
+                                                                Edit
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="delete-product-type.php?prodid=<?php echo $row['id']; ?>"
+                                                                style="cursor: pointer; color: #000;">
+                                                                <i class="mdi mdi-delete mdi-20px" style="color: #F2125E;"></i>
+                                                                Delete
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                        <?php
+                                    } else {
+                                        echo "<h3>No Results Found.</h3>";
+                                    }
+                                    ?>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>

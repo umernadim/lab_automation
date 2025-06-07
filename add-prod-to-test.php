@@ -93,15 +93,6 @@ if (isset($_POST['addProduct'])) {
                       </div>
                     </div>
 
-                    <!-- <div class="form-group">
-                      <select class="form-control form-control-lg" name="testingType" required>
-                        <option disabled selected>Select testing type</option>
-                        <option value="Voltage Test">Voltage test</option>
-                        <option value="Capacity Test">Capacity test</option>
-                        <option value="Insulation Test">Insulation test</option>
-                      </select>
-                    </div> -->
-
                     <input type="submit" value="Add to Test" class="btn btn-primary btn-user btn-block" name="addProduct">
                   </form>
               <?php

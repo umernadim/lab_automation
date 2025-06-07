@@ -12,7 +12,7 @@ if (!isset($_SESSION['email'])) {
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
     <!-- <a class="navbar-brand brand-logo" href="index.php"><img src="images/logo.svg" alt="logo" /></a> -->
     <!-- <a class="navbar-brand brand-logo-mini" href="index.php"><img src="images/logo-mini.svg" alt="logo" /></a> -->
-     <h3 class="text-primary mt-2 ml-4">Lab Automation</h3>
+    <h3 class="text-primary mt-2 ml-4">Lab Automation</h3>
     <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button"
       data-toggle="minimize">
       <span class="typcn typcn-th-menu"></span>
@@ -21,12 +21,12 @@ if (!isset($_SESSION['email'])) {
   <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
     <ul class="navbar-nav mr-lg-2">
       <li class="nav-item  d-none d-lg-flex">
-        <a class="nav-link" href="./index.php">
+        <a class="nav-link active" href="./index.php">
           Dashboard
         </a>
       </li>
       <li class="nav-item  d-none d-lg-flex">
-        <a class="nav-link active" href="./product-type.php">
+        <a class="nav-link" href="./product-type.php">
           Products
         </a>
       </li>
@@ -44,7 +44,7 @@ if (!isset($_SESSION['email'])) {
     <ul class="navbar-nav navbar-nav-right">
 
       <li class="nav-item nav-profile dropdown">
-        <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown" id="profileDropdown">
+        <a class="nav-link dropdown-toggle  pl-0 pr-0" href="" data-toggle="dropdown" id="profileDropdown">
           <i class="typcn typcn-user-outline mr-0"></i>
 
           <span class="nav-profile-name">

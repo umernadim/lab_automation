@@ -94,8 +94,8 @@ if (isset($_POST['save'])) {
                             </div>
                         </div>
                     </div>
-                    <!------------ footer ------------>
                 </div>
+                <!------------ footer ------------>
                 <?php
                 include 'components/footer.php';
                 ?>
