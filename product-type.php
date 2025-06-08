@@ -41,6 +41,9 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
+                                <div class="mb-3">
+                                    <h3 class="text-center mb-0 font-weight-bold">Product Type</h3>
+                                </div>
 
                                 <!-- Top Bar: Search Bar and Add Product Button -->
                                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">

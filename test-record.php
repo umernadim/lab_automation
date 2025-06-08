@@ -40,6 +40,9 @@
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
+                            <div class="mb-3">
+                                    <h3 class="text-center mb-0 font-weight-bold">Test Records</h3>
+                                </div>
 
                             <!-- Top Bar: Search Bar and Add Product Button -->
                             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
@@ -102,7 +105,7 @@
                                                 <th>Tested_by</th>
                                                 <th>Test_result</th>
                                                 <th>Tested_at</th>
-                                                <th>Report</th>
+                                                <th>Details</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -120,10 +123,9 @@
                                                     <td><?php echo $row['tested_at']; ?></td>
 
                                                     <td>
-                                                        <a href="delete-product-type.php?prodid=<?php echo $row['id']; ?>"
+                                                        <a href="record.php?prodid=<?php echo $row['id'];?> " 
                                                             style="cursor: pointer; color: #000;">
-                                                            <i class="mdi mdi-download mdi-20px" style="color: #F2125E;"></i>
-                                                            Generate
+                                                            <i class="mdi mdi-open-in-new" style="color: #F2125E; font-size: 20px;"></i>
                                                         </a>
                                                     </td>
                                                 </tr>
