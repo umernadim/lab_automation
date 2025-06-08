@@ -25,6 +25,10 @@ if (!isset($_SESSION['email'])) {
           Dashboard
         </a>
       </li>
+      <?php
+      if ($_SESSION["role"] === "Admin") {
+
+      ?>
       <li class="nav-item  d-none d-lg-flex">
         <a class="nav-link" href="./product-type.php">
           Products
@@ -35,6 +39,7 @@ if (!isset($_SESSION['email'])) {
           Test
         </a>
       </li>
+      <?php } ?>
       <li class="nav-item  d-none d-lg-flex">
         <a class="nav-link" href="./test-record.php">
           Reports
