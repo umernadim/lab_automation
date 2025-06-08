@@ -1,3 +1,16 @@
+<?php
+include 'config.php';
+
+session_start();
+if (isset($_SESSION['email'])) {
+  header("Location: index.php");
+}else {
+    header("Location: login.php");
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +18,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Lab Automation | Register</title>
+    <title>Lab Automation | Forgot Password</title>
     <!-- base:css -->
     <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
@@ -19,7 +32,7 @@
         <div class="container-fluid page-body-wrapper full-page-wrapper">
             <div class="content-wrapper d-flex align-items-center auth px-0">
                 <div class="row w-100 mx-0">
-                    <div class="col-lg-5 mx-auto">
+                    <div class="col-lg-4 mx-auto">
                         <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                             <h1 class="text-center text-primary mb-4">Forgot Password!</h1>
 
