@@ -37,7 +37,11 @@ $max_value = max($total_products, $test_products, $passed_products, $failed_prod
   <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
   <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
-  <link rel="shortcut icon" href="images/favicon.png" />
+ <link rel="shortcut icon" href="logo/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="logo/apple-touch-icon.png">
+  <link rel="icon" type="logo/png" sizes="32x32" href="logo/favicon-32x32.png">
+  <link rel="icon" type="logo/png" sizes="16x16" href="logo/favicon-16x16.png">
+  <link rel="manifest" href="logo/site.webmanifest">
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" rel="stylesheet">
 
   <style>

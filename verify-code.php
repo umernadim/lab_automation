@@ -23,8 +23,11 @@ if (isset($_SESSION['email'])) {
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="css/vertical-layout-light/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="" />
-</head>
+ <link rel="shortcut icon" href="logo/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="logo/apple-touch-icon.png">
+  <link rel="icon" type="logo/png" sizes="32x32" href="logo/favicon-32x32.png">
+  <link rel="icon" type="logo/png" sizes="16x16" href="logo/favicon-16x16.png">
+  <link rel="manifest" href="logo/site.webmanifest"></head>
 
 <body>
     <div class="container-scroller">

@@ -7,7 +7,7 @@
     <li class="nav-item">
       <a class="nav-link" href="index.php">
         <i class="typcn typcn-device-desktop menu-icon"></i>
-        <span class="menu-title">Dashboard <span class="badge badge-primary ml-3">New</span></span>
+        <span class="menu-title">Dashboard </span>
       </a>
     </li>
     <li class="nav-item">

@@ -1,9 +1,9 @@
-<?php 
-if (isset($_POST['save'])) {   
+<?php
+if (isset($_POST['save'])) {
     include 'config.php';
 
-    $prodName =mysqli_real_escape_string($connect, $_POST['prodName']);
-    $prodCode =mysqli_real_escape_string($connect, $_POST['prodCode']);
+    $prodName = mysqli_real_escape_string($connect, $_POST['prodName']);
+    $prodCode = mysqli_real_escape_string($connect, $_POST['prodCode']);
 
     $sql = "SELECT * FROM product_types";
 
@@ -12,7 +12,7 @@ if (isset($_POST['save'])) {
         $sql1 = "INSERT INTO product_types(`type_name`, `code`) VALUES ('{$prodName}','{$prodCode}')";
         if (mysqli_query($connect, $sql1)) {
             header("Location:product-type.php");
-        }else {
+        } else {
             echo "<p style='color:red;text-align:center;margin: 10px 0;'>Product addition failed.</p>";
         }
     }
@@ -36,8 +36,12 @@ if (isset($_POST['save'])) {
     <link rel="stylesheet" href="css/vertical-layout-light/style.css">
     <link rel="stylesheet" href="css/map/vertical-layout-light/style.css.map">
     <!-- endinject -->
-    <link rel="shortcut icon" href="images/favicon.png" />
 
+    <link rel="shortcut icon" href="logo/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="logo/apple-touch-icon.png">
+    <link rel="icon" type="logo/png" sizes="32x32" href="logo/favicon-32x32.png">
+    <link rel="icon" type="logo/png" sizes="16x16" href="logo/favicon-16x16.png">
+    <link rel="manifest" href="logo/site.webmanifest">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" rel="stylesheet">
 
 </head>
@@ -60,7 +64,7 @@ if (isset($_POST['save'])) {
             ?>
             <!-- partial -->
             <div class="main-panel">
-                <div class="content-wrapper"  style="display: flex; justify-content: center;">
+                <div class="content-wrapper" style="display: flex; justify-content: center;">
                     <div class="col-md-6 grid-margin ">
                         <div class="card">
                             <div class="card-body">
@@ -69,13 +73,13 @@ if (isset($_POST['save'])) {
                                 <form class="forms-sample" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="Post">
                                     <div class="form-group">
                                         <label for="exampleInputProdName">Product Name</label>
-                                        <input type="text" name="prodName" class="form-control" id="exampleInputProdName"
-                                            placeholder="Enter Product name">
+                                        <input type="text" name="prodName" class="form-control"
+                                            id="exampleInputProdName" placeholder="Enter Product name">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputProdCode">Product Code</label>
-                                        <input type="text" name="prodCode" class="form-control" id="exampleInputProdCode"
-                                            placeholder="Enter product code">
+                                        <input type="text" name="prodCode" class="form-control"
+                                            id="exampleInputProdCode" placeholder="Enter product code">
                                     </div>
 
                                     <button type="submit" name="save" class="btn btn-primary mr-2">Submit</button>
@@ -86,9 +90,9 @@ if (isset($_POST['save'])) {
                     </div>
                     <!------------ footer ------------>
                 </div>
-                    <?php
-                    include 'components/footer.php';
-                    ?>
+                <?php
+                include 'components/footer.php';
+                ?>
             </div>
         </div>
         <!-- page-body-wrapper ends -->

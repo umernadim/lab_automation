@@ -40,7 +40,11 @@ if (isset($_POST['addProduct'])) {
   <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
   <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
-  <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="shortcut icon" href="logo/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="logo/apple-touch-icon.png">
+  <link rel="icon" type="logo/png" sizes="32x32" href="logo/favicon-32x32.png">
+  <link rel="icon" type="logo/png" sizes="16x16" href="logo/favicon-16x16.png">
+  <link rel="manifest" href="logo/site.webmanifest">
 </head>
 
 <body>
@@ -62,40 +66,46 @@ if (isset($_POST['addProduct'])) {
                 $result1 = mysqli_query($connect, $sql1);
 
                 if ($row1 = mysqli_fetch_assoc($result1)) {
-              ?>
+                  ?>
                   <form class="user" action="<?php echo $_SERVER['PHP_SELF'] . '?prodid=' . $id; ?>" method="post">
                     <input type="hidden" name="id" value="<?php echo $row1['id']; ?>">
 
                     <div class="form-group row">
                       <div class="col-sm-6 mb-3 mb-sm-0">
-                        <input type="text" class="form-control form-control-user" value="<?php echo $row1['type_name']; ?>" name="prodName" placeholder="Product Name" required>
+                        <input type="text" class="form-control form-control-user" value="<?php echo $row1['type_name']; ?>"
+                          name="prodName" placeholder="Product Name" required>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" class="form-control form-control-user" value="<?php echo $row1['id']; ?>" name="prodTypeid" placeholder="Product Type ID" required>
+                        <input type="text" class="form-control form-control-user" value="<?php echo $row1['id']; ?>"
+                          name="prodTypeid" placeholder="Product Type ID" required>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-sm-6 mb-3 mb-sm-0">
-                        <input type="text" class="form-control form-control-user" name="revsionCode" placeholder="Revision Code" maxlength="2" required>
+                        <input type="text" class="form-control form-control-user" name="revsionCode"
+                          placeholder="Revision Code" maxlength="2" required>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" class="form-control form-control-user" name="mfgNumber" maxlength="2" placeholder="Manufactured Number" required>
+                        <input type="text" class="form-control form-control-user" name="mfgNumber" maxlength="2"
+                          placeholder="Manufactured Number" required>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-sm-6 mb-3 mb-sm-0">
-                        <input type="date" class="form-control form-control-user" name="mfgDate" placeholder="Manufactured Date" required>
+                        <input type="date" class="form-control form-control-user" name="mfgDate"
+                          placeholder="Manufactured Date" required>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" class="form-control form-control-user" name="uploadedBy" placeholder="Uploaded By" required>
+                        <input type="text" class="form-control form-control-user" name="uploadedBy"
+                          placeholder="Uploaded By" required>
                       </div>
                     </div>
 
                     <input type="submit" value="Add to Test" class="btn btn-primary btn-user btn-block" name="addProduct">
                   </form>
-              <?php
+                  <?php
                 } else {
                   echo "<p style='color:red;text-align:center;'>Invalid product type ID.</p>";
                 }
