@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2025 at 08:22 PM
+-- Generation Time: Jun 12, 2025 at 07:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -129,6 +129,77 @@ INSERT INTO `register` (`user_id`, `first_name`, `last_name`, `email`, `password
 (7, 'umer', 'nadeem', 'umer@gmail.com', '6a8d11f37a9ece9ebc851ea11331160e', 'Admin'),
 (8, 'amir', 'salman', 'amir@gmail.com', '63eefbd45d89e8c91f24b609f7539942', 'Normal User');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tests`
+--
+
+CREATE TABLE `tests` (
+  `id` int(11) NOT NULL,
+  `test_id` varchar(20) DEFAULT NULL,
+  `product_id` varchar(10) DEFAULT NULL,
+  `test_type` varchar(50) DEFAULT NULL,
+  `test_criteria` text DEFAULT NULL,
+  `observed_output` text DEFAULT NULL,
+  `test_result` enum('Passed','Failed') NOT NULL,
+  `remarks` text DEFAULT NULL,
+  `tested_by` varchar(100) DEFAULT NULL,
+  `tested_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tests`
+--
+
+INSERT INTO `tests` (`id`, `test_id`, `product_id`, `test_type`, `test_criteria`, `observed_output`, `test_result`, `remarks`, `tested_by`, `tested_at`) VALUES
+(2, 'RES0-XX-0001', 'RES0900045', 'Voltage Test', 'Voltage must not drop below 220V under load', 'Maintained 225V under full load', 'Passed', 'Product passed voltage test with no deviations.', 'umer', '2025-06-01 18:59:29'),
+(9, 'SWG0-XX-0001', 'SWG0900023', 'Insulation Test', 'this is only to test database.', 'testing only.', 'Failed', 'aerafdafadf', 'amir', '2025-06-03 19:22:01'),
+(10, 'FUS5-XX-0001', 'FUS5300009', 'Capacity Test', 'only to test queries', 'fasdfasfafwe', 'Passed', 'sdfasdfaweewrwq', 'ahmad', '2025-06-06 12:05:53'),
+(11, 'ANO2-XX-0001', 'ANO2200041', 'Insulation Test', 'faiuhfef', 'fwaefwqe', 'Failed', 'ok', 'ahmad', '2025-06-06 18:59:46');
+
+--
+-- Triggers `tests`
+--
+DELIMITER $$
+CREATE TRIGGER `before_insert_test_id` BEFORE INSERT ON `tests` FOR EACH ROW BEGIN
+  DECLARE p_code VARCHAR(10);
+  DECLARE rev_code VARCHAR(10);
+  DECLARE t_code VARCHAR(5);
+  DECLARE roll_number INT;
+
+  -- Get product code and revision from products table
+  SELECT 
+    LEFT(product_id, 2),           -- product code (e.g., SG)
+    SUBSTRING(product_id, 3, 2)    -- revision code (e.g., R1)
+  INTO p_code, rev_code
+  FROM products
+  WHERE product_id = NEW.product_id;
+
+  -- Derive test type code from test_type
+  IF NEW.test_type = 'Electrical' THEN
+    SET t_code = 'EL';
+  ELSEIF NEW.test_type = 'Thermal' THEN
+    SET t_code = 'TH';
+  ELSEIF NEW.test_type = 'Mechanical' THEN
+    SET t_code = 'ME';
+  ELSE
+    SET t_code = 'XX'; -- fallback
+  END IF;
+
+  -- Get roll number (incremental count per product + test type)
+  SELECT COUNT(*) + 1 INTO roll_number
+  FROM tests
+  WHERE product_id = NEW.product_id AND test_type = NEW.test_type;
+
+  -- Generate test_id
+  SET NEW.test_id = CONCAT(
+    p_code, rev_code, '-', t_code, '-', LPAD(roll_number, 4, '0')
+  );
+END
+$$
+DELIMITER ;
+
 --
 -- Indexes for dumped tables
 --
@@ -156,6 +227,14 @@ ALTER TABLE `register`
   ADD UNIQUE KEY `email_unique` (`email`);
 
 --
+-- Indexes for table `tests`
+--
+ALTER TABLE `tests`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `test_id` (`test_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -178,6 +257,12 @@ ALTER TABLE `register`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `tests`
+--
+ALTER TABLE `tests`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -186,6 +271,12 @@ ALTER TABLE `register`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`product_type_id`) REFERENCES `product_types` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tests`
+--
+ALTER TABLE `tests`
+  ADD CONSTRAINT `tests_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
