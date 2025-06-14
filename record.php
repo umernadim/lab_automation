@@ -10,11 +10,12 @@
     <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="css/vertical-layout-light/style.css">
- <link rel="shortcut icon" href="logo/favicon.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="logo/apple-touch-icon.png">
-  <link rel="icon" type="logo/png" sizes="32x32" href="logo/favicon-32x32.png">
-  <link rel="icon" type="logo/png" sizes="16x16" href="logo/favicon-16x16.png">
-  <link rel="manifest" href="logo/site.webmanifest">    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="logo/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="logo/apple-touch-icon.png">
+    <link rel="icon" type="logo/png" sizes="32x32" href="logo/favicon-32x32.png">
+    <link rel="icon" type="logo/png" sizes="16x16" href="logo/favicon-16x16.png">
+    <link rel="manifest" href="logo/site.webmanifest">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" rel="stylesheet">
     <style>
         @media print {
             .no-print {
@@ -158,10 +159,16 @@
     <script src="js/dashboard.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('generatePDF').addEventListener('click', function () {
-                const element = document.getElementById('htmlContent');
+            const button = document.getElementById('generatePDF');
+            const element = document.getElementById('htmlContent');
+
+            button.addEventListener('click', function () {
+                // Temporarily hide the button
+                button.style.display = 'none';
 
                 const opt = {
                     margin: 0.5,
@@ -171,10 +178,16 @@
                     jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
                 };
 
-                html2pdf().set(opt).from(element).save();
+                html2pdf().set(opt).from(element).save().then(() => {
+                    // Show the button back after download
+                    button.style.display = 'inline-block';
+                });
             });
         });
     </script>
+
+
+
 
 </body>
 
