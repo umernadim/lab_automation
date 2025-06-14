@@ -2,11 +2,34 @@
 include 'config.php';
 
 session_start();
+
 if (isset($_SESSION['email'])) {
   header("Location: index.php");
-}else {
-    header("Location: login.php");
 }
+
+
+if(!isset($_SESSION['pincode']))
+{
+    header('location:forgot-password.php');
+}
+
+
+if(isset($_POST['verifyBtn'])){
+    $verifyCode = $_POST['verifyCode'];
+
+    if($verifyCode == $_SESSION['pincode']){
+
+        // Unset the session variable after successful verification
+        unset($_SESSION['pincode']);
+        
+        // Redirect to reset password page
+        header("Location: new-password.php");
+        exit();
+    }else{
+        echo "<script>alert('Invalid verification code. Please try again.');</script>";
+    }
+}
+
 
 ?>
 
@@ -40,13 +63,13 @@ if (isset($_SESSION['email'])) {
 
                             <form class="pt-3" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                                 <div class="form-group">
-                                    <input type="email" name="email" class="form-control form-control-lg"
+                                    <input type="text" name="verifyCode" class="form-control form-control-lg"
                                         id="exampleInputEmail1" placeholder="Enter verification code" required>
                                 </div>
                                
                                 <div class="mt-3">
                                     <input type="submit" value="Verify" class="btn btn-primary btn-user btn-block"
-                                        name="login">
+                                        name="verifyBtn">
                                 </div>
                                 <div class="mt-4 text-center font-weight-light">
                                     Already Have an account?

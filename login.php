@@ -49,7 +49,7 @@ if (isset($_SESSION['email'])) {
                 </div>
                 <div class="mt-4 text-center">
                   
-                  <a href="#" class="auth-link text-black">Forgot password?</a>
+                  <a href="forgot-password.php" class="auth-link text-black">Forgot password?</a>
                 </div>
 
                 <div class="text-center mt-2 font-weight-light">

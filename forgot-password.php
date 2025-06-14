@@ -4,8 +4,50 @@ include 'config.php';
 session_start();
 if (isset($_SESSION['email'])) {
   header("Location: index.php");
-}else {
-    header("Location: login.php");
+}
+
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php'; 
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'])) {
+    $email = $_POST['email'];
+
+    $pincode = rand(1001,9999);
+
+    $_SESSION['pincode'] = $pincode;
+    $_SESSION['forgotPasswordEmail'] = $email;
+
+    // TODO: Validate that this email exists in your DB before proceeding
+
+    $mail = new PHPMailer(true);
+    try {
+        // Server settings
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';            // Set the SMTP server
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'itsumernadeem@gmail.com';      // Your Gmail address
+        $mail->Password   = 'tbtw qkoe infs ksjh';       // App password or Gmail password (use app password if 2FA is on)
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = 587;
+
+        // Recipients
+        $mail->setFrom('itsumernadeem@gmail.com', 'Lab Automation');
+        $mail->addAddress($email);
+
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = 'Password Reset Request';
+        $mail->Body    = "Hi,<br><br> Your verification code is $pincode " . $email . "' </a><br><br>Kindly, ignore this email,If you didn't request.";
+
+        $mail->send();
+        echo "<script>alert('Reset password link has been sent to your email');</script>";
+        echo "<script>window.location.href = 'verify-code.php';</script>";
+    } catch (Exception $e) {
+        echo "<script>alert('Message could not be sent. Mailer Error: {$mail->ErrorInfo}');</script>";
+    }
 }
 
 

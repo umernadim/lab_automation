@@ -1,14 +1,44 @@
- <?php
+<?php
 include 'config.php';
 
 session_start();
 if (isset($_SESSION['email'])) {
-  header("Location: index.php");
-}else {
-    header("Location: login.php");
+    header("Location: index.php");
 }
 
-?> 
+$forgotPasswordEmail = $_SESSION['forgotPasswordEmail'];
+
+if (!isset($_SESSION['forgotPasswordEmail'])) {
+    header('location:forgot-password.php');
+}
+
+
+if (isset($_POST['updatePasswordBtn'])) {
+
+    $password = $_POST['password'];
+
+
+
+    $hash_password = md5($_POST['password']);
+
+
+    $insert = "UPDATE `register` SET `password`='$hash_password' WHERE `email`='$forgotPasswordEmail'";
+
+
+
+    if (mysqli_query($connect, $insert)) {
+        // echo "<div class='alert alert-danger text-center'>Password Updated Successfully. $password</div>";
+        header('location:login.php');
+
+
+    } else {
+        echo "<div class='alert alert-danger text-center'>Password Updation failed.</div>";
+    }
+}
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,19 +65,16 @@ if (isset($_SESSION['email'])) {
                             <h1 class="text-center text-primary mb-4">New Password!</h1>
 
                             <form class="pt-3" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                                <div class="form-group">
-                                    <input type="email" name="email" class="form-control form-control-lg"
-                                        id="exampleInputEmail1" placeholder="Enter your email" required>
-                                </div>
+
 
                                 <div class="form-group">
-                                    <input type="text" name="password" class="form-control form-control-lg"
+                                    <input type="password" name="password" class="form-control form-control-lg"
                                         id="exampleInputPassword" placeholder="Enter new password" required>
                                 </div>
-                               
+
                                 <div class="mt-3">
-                                    <input type="submit" value="Reset Password" class="btn btn-primary btn-user btn-block"
-                                        name="login">
+                                    <input type="submit" value="Reset Password"
+                                        class="btn btn-primary btn-user btn-block" name="updatePasswordBtn">
                                 </div>
                                 <div class="mt-4 text-center font-weight-light">
                                     Already Have an account?
