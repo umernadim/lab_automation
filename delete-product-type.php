@@ -6,7 +6,10 @@ $result = mysqli_query($connect,$sql);
 if ($result) {
     header("Location:product-type.php");
 }else{
-  echo "<p style='color:red;margin: 10px 0;'>Can\'t Delete the User Record.</p>";
+  echo "<p style='color:red;margin: 10px 0;'>Can't Delete the User Record.</p>";
 }
 mysqli_close($connect);
+
 ?>
+
+
